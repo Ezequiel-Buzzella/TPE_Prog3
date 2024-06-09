@@ -25,13 +25,13 @@ public class Servicios {
 		this.tareas = new HashMap<>();
 		this.tareasCriticas = new TreeMap<>();
 		this.tareasNoCriticas = new TreeMap<>();
-		
+
 		CSVReader reader = new CSVReader();
-		this.tareas = reader.readTasks(pathTareas); 
+		this.tareas = reader.readTasks(pathTareas);
 		reader.readProcessors(pathProcesadores);
 
-		for(Tarea tarea : tareas.values()) {
-			if(tarea.esCritica()) {
+		for (Tarea tarea : tareas.values()) {
+			if (tarea.esCritica()) {
 				this.agregarIdTarea(tareasCriticas, tarea);
 			} else {
 				this.agregarIdTarea(tareasNoCriticas, tarea);
@@ -41,10 +41,10 @@ public class Servicios {
 
 	/*
 	 * Agregar un id de una tarea a uno de los árboles.
-	*/
+	 */
 	private void agregarIdTarea(TreeMap<Integer, List<String>> mapa, Tarea tarea) {
 		// Si el nodo que corresponde no tiene ningún id guardado.
-		if(mapa.get(tarea.getPrioridad()) == null) {
+		if (mapa.get(tarea.getPrioridad()) == null) {
 			// Agegar una lista de factoreo con el id de la tarea a ese nodo del árbol.
 			LinkedList<String> listaDeFactoreo = new LinkedList<>();
 			listaDeFactoreo.add(tarea.getId());
@@ -67,7 +67,7 @@ public class Servicios {
 	 */
 	public List<Tarea> servicio2(boolean esCritica) {
 
-		if(esCritica) {
+		if (esCritica) {
 			ArrayList<Tarea> listaDeCriticas = this.getTareasFrom(this.tareasCriticas);
 			return listaDeCriticas;
 		} else {
@@ -80,23 +80,23 @@ public class Servicios {
 	 * Expresar la complejidad temporal del servicio 3.
 	 */
 	public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {
-	
-		ArrayList<Tarea> resultado = new ArrayList<>(); 
-		resultado = this.getTareasFrom(this.tareasCriticas.subMap(prioridadInferior, 
-																true, 
-																prioridadSuperior, 
-																true));
-		resultado.addAll(this.getTareasFrom(this.tareasNoCriticas.subMap(prioridadInferior, 
-																		true, 
-																		prioridadSuperior, 
-																		true)));					
+
+		ArrayList<Tarea> resultado = new ArrayList<>();
+		resultado = this.getTareasFrom(this.tareasCriticas.subMap(prioridadInferior,
+				true,
+				prioridadSuperior,
+				true));
+		resultado.addAll(this.getTareasFrom(this.tareasNoCriticas.subMap(prioridadInferior,
+				true,
+				prioridadSuperior,
+				true)));
 		return resultado;
 	}
 
-	private ArrayList<Tarea> getTareasFrom(NavigableMap<Integer,List<String>> mapa) {
+	private ArrayList<Tarea> getTareasFrom(NavigableMap<Integer, List<String>> mapa) {
 		ArrayList<Tarea> resultado = new ArrayList<>();
 		for (List<String> tareasConCiertaPrioridad : mapa.values()) {
-			for(String id : tareasConCiertaPrioridad) {
+			for (String id : tareasConCiertaPrioridad) {
 				resultado.add(servicio1(id));
 			}
 		}
