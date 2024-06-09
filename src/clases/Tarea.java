@@ -55,4 +55,13 @@ public class Tarea {
         this.prioridad = prioridad;
     }
 
+    @Override
+    public String toString() {
+        return "Tarea " + this.getId() + 
+                ": Nombre " + this.getNombre() + 
+                "; tiempo: " + this.getTiempo() + 
+                "; critica: " + this.esCritica() + 
+                "; prioridad: " + this.getPrioridad();
+    }
+
 }
