@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import clases.Procesador;
 import clases.Tarea;
 
 
@@ -13,13 +15,14 @@ public class CSVReader {
 	public CSVReader() {
 	}
 	
-	public void readTasks(String taskPath) {
+	public HashMap<String, Tarea> readTasks(String taskPath) {
 		
 		// Obtengo una lista con las lineas del archivo
 		// lines.get(0) tiene la primer linea del archivo
 		// lines.get(1) tiene la segunda linea del archivo... y así
 		ArrayList<String[]> lines = this.readContent(taskPath);
-		
+		HashMap<String, Tarea> tareas = new HashMap<>();
+
 		for (String[] line: lines) {
 			// Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
 			String id = line[0].trim();
@@ -28,18 +31,10 @@ public class CSVReader {
 			Boolean critica = Boolean.parseBoolean(line[3].trim());
 			Integer prioridad = Integer.parseInt(line[4].trim());
 			// Aca instanciar lo que necesiten en base a los datos leidos
-            Tarea tarea = new Tarea(id, nombre, tiempo, critica, prioridad);
-			/* 
-			tareasMap.put(idTarea, tarea);
-            if (esCritica) {
-                tareasCriticas.add(tarea);
-            } else {
-                tareasNoCriticas.add(tarea);
-            }
-			Si se usa hashmap aqui tambien deben ir los ordenamientos (merge).
-			*/
+			Tarea tarea = new Tarea(id, nombre, tiempo, critica, prioridad);
+			tareas.put(id, tarea);
 		}
-		
+		return tareas;
 	}
 	
 public void readProcessors(String processorPath) {
@@ -48,6 +43,7 @@ public void readProcessors(String processorPath) {
 		// lines.get(0) tiene la primer linea del archivo
 		// lines.get(1) tiene la segunda linea del archivo... y así
 		ArrayList<String[]> lines = this.readContent(processorPath);
+		ArrayList<Procesador> procesadores = new ArrayList<>();
 		
 		for (String[] line: lines) {
 			// Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
@@ -57,7 +53,6 @@ public void readProcessors(String processorPath) {
 			Integer anio = Integer.parseInt(line[3].trim());
 			// Aca instanciar lo que necesiten en base a los datos leidos
 		}
-		
 	}
 
 	private ArrayList<String[]> readContent(String path) {

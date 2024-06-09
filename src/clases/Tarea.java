@@ -39,7 +39,7 @@ public class Tarea {
         this.tiempo = tiempo;
     }
 
-    public boolean isCritica() {
+    public boolean esCritica() {
         return this.critica;
     }
 
